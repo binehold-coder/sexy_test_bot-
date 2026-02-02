@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+import random
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQueryHandler, ContextTypes, filters, ConversationHandler
 from config import BOT_TOKEN, ADMIN_ID
@@ -384,6 +385,31 @@ PROFILES = {
             "description": "Ты — тот самый опыт, о котором не рассказывают новым партнёрам. С тобой весело, неловко и немного против здравого смысла. Ты не лучший вариант, ты самый запоминающийся. После тебя люди либо берут паузу, либо пишут ночью. Ты исчезаешь вовремя — до разговоров о чувствах. И появляешься тоже вовремя. Карма тебя найдёт. Но не сегодня.",
             "advice": "",
         },
+        "night_message": {
+            "name": "Ночной голосовой",
+            "description": "Твой стиль — это «я просто хотел уточнить…» в 02:17. Ты появляешься тогда, когда логика уже спит. В твоём арсенале — полунамеки, полутени и идеально поставленное «случайно». С тобой легко потерять сон и сложнее — достоинство. Зато скучно не бывает.",
+            "advice": "",
+        },
+        "boundary_tester": {
+            "name": "Тестировщик границ",
+            "description": "Ты не бунтарь — ты QA души. Ты проверяешь «а так можно?», «а вот так?», «а если ещё немножко?». С тобой всё превращается в A/B‑тест, где победитель — любопытство. Иногда ты перестаёшь понимать, где эксперимент, а где жизнь. Это и есть твой жанр.",
+            "advice": "",
+        },
+        "serial_flirt": {
+            "name": "Серийный флиртер",
+            "description": "Ты коллекционируешь реакции, как стикеры: «смущение», «смеётся», «ой, это было лишнее». Ты не обязательно идёшь до конца — тебе важен сам разогрев. Люди рядом с тобой учатся краснеть без причины. И да, ты об этом знаешь.",
+            "advice": "",
+        },
+        "mood_switcher": {
+            "name": "Переключатель режимов",
+            "description": "Сегодня ты — нежность, завтра — хаос, послезавтра — философ. С тобой никогда не ясно, где сценарий, а где импровизация. Ты меняешь тональность так быстро, что у людей не успевают обновляться ожидания. Это и пугает, и притягивает.",
+            "advice": "",
+        },
+        "misleading_charm": {
+            "name": "Очарование с подвохом",
+            "description": "Ты выглядишь безопасно, звучишь убедительно, а потом внезапно все уже пересобирают мораль. Ты не ломишься в дверь — ты оставляешь её приоткрытой. И люди сами заходят. Твой главный талант — создавать чувство «это моя идея».",
+            "advice": "",
+        },
     },
     "uk": {
         "bad_decision": {
@@ -409,6 +435,31 @@ PROFILES = {
         "shame_repeat": {
             "name": "Соромно, але повторив(ла) б",
             "description": "Ти — той самий досвід, про який не розповідають новим партнерам. З тобою весело, ніяково і трохи всупереч здоровому глузду. Ти не найкращий варіант, ти найпам’ятніший. Після тебе люди або беруть паузу, або пишуть вночі. Ти зникаєш вчасно — до розмов про почуття. І з’являєшся теж вчасно. Карма тебе знайде. Але не сьогодні.",
+            "advice": "",
+        },
+        "night_message": {
+            "name": "Нічне голосове",
+            "description": "Твій стиль — це «я просто хотів(ла) уточнити…» о 02:17. Ти з’являєшся тоді, коли логіка вже спить. У твоєму арсеналі — напівнатяки, напівтіні й ідеально поставлене «випадково». З тобою легко втратити сон і складніше — гідність. Зате нудно не буває.",
+            "advice": "",
+        },
+        "boundary_tester": {
+            "name": "Тестувальник меж",
+            "description": "Ти не бунтар(ка) — ти QA душі. Ти перевіряєш «а так можна?», «а ось так?», «а якщо ще трішки?». З тобою все перетворюється на A/B‑тест, де переможець — цікавість. Іноді ти перестаєш розуміти, де експеримент, а де життя. Це і є твій жанр.",
+            "advice": "",
+        },
+        "serial_flirt": {
+            "name": "Серійний фліртер",
+            "description": "Ти колекціонуєш реакції, як стікери: «знітився», «сміється», «ой, це було зайве». Ти не обов’язково йдеш до кінця — тобі важливий сам розігрів. Люди поруч із тобою вчаться червоніти без причини. І так, ти про це знаєш.",
+            "advice": "",
+        },
+        "mood_switcher": {
+            "name": "Перемикач режимів",
+            "description": "Сьогодні ти — ніжність, завтра — хаос, післязавтра — філософ. З тобою ніколи не ясно, де сценарій, а де імпровізація. Ти змінюєш тональність так швидко, що у людей не встигають оновлюватися очікування. Це і лякає, і притягує.",
+            "advice": "",
+        },
+        "misleading_charm": {
+            "name": "Чарівність із підступом",
+            "description": "Ти виглядаєш безпечно, звучиш переконливо, а потім раптом усі вже пересобирають мораль. Ти не ламаєшся у двері — ти лишаєш їх прочиненими. І люди самі заходять. Твій головний талант — створювати відчуття «це була моя ідея».",
             "advice": "",
         },
     },
@@ -438,6 +489,31 @@ PROFILES = {
             "description": "Tu es cette expérience dont on ne parle pas aux nouveaux partenaires. Avec toi, c’est fun, gênant et un peu contre le bon sens. Tu n’es pas le meilleur choix, tu es le plus mémorable. Après toi, soit on prend une pause, soit on écrit la nuit. Tu disparais au bon moment — avant les discussions de sentiments. Et tu réapparais aussi au bon moment. Le karma te trouvera. Mais pas aujourd’hui.",
             "advice": "",
         },
+        "night_message": {
+            "name": "Message vocal nocturne",
+            "description": "Ton style, c’est « je voulais juste préciser… » à 02h17. Tu apparais quand la logique dort déjà. Dans ton arsenal : demi‑sous‑entendus, demi‑ombres et un « par hasard » parfaitement dosé. Avec toi, on perd facilement le sommeil et plus difficilement la dignité. Au moins, on ne s’ennuie pas.",
+            "advice": "",
+        },
+        "boundary_tester": {
+            "name": "Testeur de limites",
+            "description": "Tu n’es pas un(e) rebelle — tu es le QA des âmes. Tu testes « et comme ça ? », « et comme ci ? », « et un peu plus ? ». Avec toi, tout devient un A/B‑test où la curiosité gagne. Parfois tu ne sais plus où finit l’expérience et où commence la vie. C’est ton genre.",
+            "advice": "",
+        },
+        "serial_flirt": {
+            "name": "Flirteur en série",
+            "description": "Tu collectionnes les réactions comme des stickers : « gêné », « il/elle rit », « oups ». Tu ne vas pas toujours au bout — l’échauffement te suffit. Les gens avec toi apprennent à rougir sans raison. Et oui, tu le sais.",
+            "advice": "",
+        },
+        "mood_switcher": {
+            "name": "Interrupteur d’humeurs",
+            "description": "Aujourd’hui douceur, demain chaos, après‑demain philosophie. Avec toi, on ne sait jamais où est le script et où est l’impro. Tu changes de ton si vite que les attentes n’ont pas le temps de se mettre à jour. Ça intrigue autant que ça attire.",
+            "advice": "",
+        },
+        "misleading_charm": {
+            "name": "Charme piégé",
+            "description": "Tu as l’air safe, tu parles bien, puis soudain chacun réorganise sa morale. Tu ne forces pas la porte — tu la laisses entrouverte. Et les gens entrent d’eux‑mêmes. Ton vrai talent, c’est de faire croire « c’était mon idée ».",
+            "advice": "",
+        },
     },
 }
 
@@ -455,6 +531,11 @@ class TestBot:
             "emotional_wrecker": 0,
             "logic_sabotage": 0,
             "shame_repeat": 0,
+            "night_message": 0,
+            "boundary_tester": 0,
+            "serial_flirt": 0,
+            "mood_switcher": 0,
+            "misleading_charm": 0,
         }
 
         age_first = numeric_answers.get(1, 0)
@@ -483,56 +564,76 @@ class TestBot:
             scores["logic_sabotage"] += 1
             if partners_now and partners_now > 1:
                 scores["bad_decision"] += 1
+            scores["misleading_charm"] += 1
 
         if dissatisfied == "yes":
             scores["emotional_wrecker"] += 2
             scores["shame_repeat"] += 1
+            scores["night_message"] += 1
 
         if freq == "often":
             scores["logic_sabotage"] += 2
             scores["shame_repeat"] += 1
+            scores["serial_flirt"] += 1
         elif freq == "sometimes":
             scores["shame_repeat"] += 1
+            scores["mood_switcher"] += 1
         elif freq == "rarely":
             scores["passive_aggressive"] += 2
+            scores["night_message"] += 1
         elif freq == "never":
             scores["passive_aggressive"] += 3
+            scores["night_message"] += 1
 
         if orgasms >= 3:
             scores["logic_sabotage"] += 1
+            scores["serial_flirt"] += 1
         elif orgasms == 2:
             scores["shame_repeat"] += 1
+            scores["mood_switcher"] += 1
         elif orgasms == 0:
             scores["emotional_wrecker"] += 1
 
         if duration >= 5 and duration <= 20:
             scores["shame_repeat"] += 1
+            scores["mood_switcher"] += 1
         elif duration > 30:
             scores["logic_sabotage"] += 1
+            scores["boundary_tester"] += 1
 
         if partners_total > 10:
             scores["bad_decision"] += 2
+            scores["boundary_tester"] += 1
         elif partners_total >= 5:
             scores["logic_sabotage"] += 1
+            scores["serial_flirt"] += 1
         elif partners_total <= 2:
             scores["passive_aggressive"] += 1
+            scores["night_message"] += 1
 
         if partners_now and partners_now > 1:
             scores["bad_decision"] += 1
+            scores["boundary_tester"] += 1
         elif partners_now == 1:
             scores["emotional_wrecker"] += 1
+            scores["misleading_charm"] += 1
         elif partners_now == 0:
             scores["passive_aggressive"] += 1
+            scores["night_message"] += 1
 
         if has_bf == "yes":
             scores["emotional_wrecker"] += 1
+            scores["misleading_charm"] += 1
         elif has_bf == "no":
             scores["passive_aggressive"] += 1
+            scores["serial_flirt"] += 1
 
         if masturbation == "often":
             scores["passive_aggressive"] += 1
+            scores["night_message"] += 1
         elif masturbation == "sometimes":
             scores["shame_repeat"] += 1
+            scores["mood_switcher"] += 1
         elif masturbation == "rarely":
             scores["emotional_wrecker"] += 1
         elif masturbation == "never":
@@ -541,29 +642,42 @@ class TestBot:
         if porn == "yes":
             scores["logic_sabotage"] += 1
             scores["shame_repeat"] += 1
+            scores["serial_flirt"] += 1
         elif porn == "no":
             scores["passive_aggressive"] += 1
+            scores["misleading_charm"] += 1
 
         if porn_type in extreme_types:
             scores["logic_sabotage"] += 2
+            scores["boundary_tester"] += 1
         if want_type in extreme_types:
             scores["logic_sabotage"] += 2
+            scores["boundary_tester"] += 2
 
         if same_sex == "yes":
             scores["logic_sabotage"] += 1
+            scores["boundary_tester"] += 1
         if sex_with_woman == "yes":
             scores["bad_decision"] += 1
+            scores["boundary_tester"] += 1
 
         if fantasy == "yes":
             scores["shame_repeat"] += 2
+            scores["serial_flirt"] += 1
         if fantasy_want == "yes":
             scores["shame_repeat"] += 1
+            scores["misleading_charm"] += 1
 
         if age_first and age_first >= 18 and partners_total <= 2:
             scores["passive_aggressive"] += 1
+            scores["night_message"] += 1
 
-        profile = max(scores, key=scores.get)
-        return profile if scores[profile] > 0 else "shame_repeat"
+        max_score = max(scores.values())
+        if max_score <= 0:
+            return "shame_repeat"
+
+        top_profiles = [key for key, value in scores.items() if value >= max_score - 1]
+        return random.choice(top_profiles)
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
